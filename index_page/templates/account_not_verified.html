@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/error.css">
+    <title>error! withdrawal failed</title>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <strong class="icon-error"></strong>
+            <h1>please verify your account to be able to withdraw your funds.</h1>
+            <h2 style="color: #ffc107;">an email will be sent to you with options to verify this account and link it with a local bank.</h2>
+
+            <a href="{% url 'dashboard' %}">back to dashboard</a>
+            <a class="green" href="#">customer care</a>
+        </div>
+    </section>
+</body>
+</html>

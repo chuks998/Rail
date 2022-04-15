@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{% static 'css/error.css' %}">
+    <title>error! invalid user</title>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <strong class="icon-warning2"></strong>
+            <h1>the amount you wish to transfer is above your account balance</h1>
+            <h2>please deposit funds to your account and try again. <br> ask customer care for help to make deposit</h2>
+
+            <a href="{% url 'dashboard' %}">back to dashboard</a>
+            <a class="green" href="#">customer care</a>
+        </div>
+    </section>
+</body>
+</html>

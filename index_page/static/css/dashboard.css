@@ -1,0 +1,175 @@
+@font-face {
+    font-family: 'icomoon';
+    /* src:  url('fonts/icomoon.eot?10si43'); */
+    src: url('/static/fonts/icomoon.eot?10si43');
+    src:  url('/static/fonts/icomoon.eot?10si43#iefix') format('embedded-opentype'),
+      url('/static/fonts/icomoon.ttf?10si43') format('truetype'),
+      url('/static/fonts/icomoon.woff?10si43') format('woff'),
+      url('/static/fonts/icomoon.svg?10si43#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    /* speak: none; */
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+
+body{
+    height: 100vh;
+    width: 100vw;
+}
+body section{
+    background-color: var(--white);
+    height: 100%;
+    width: 70%;
+    margin: 0 auto;
+}
+nav{
+    /* background-color: #38d39f; */
+    height: 50px;
+    /* background-color: #f5f5f5; */
+    display: flex;
+    align-items:flex-end;
+}
+h3, strong{
+    font-size: 400%;
+    display: inline;
+}
+nav h3{
+    color: #38d39f;
+}
+strong{
+    /* color: #333; */
+    color: var(--gray);
+    /* text-shadow: 1px 1px #cccccc36; */
+}
+.action{
+    height: 100px;
+    width: 100%;
+    /* background-color: #38d39f; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.action strong{
+    color: #33333380;
+}
+
+.action small{
+    color: var(--warning);
+    font-size: 150%;
+}
+.action .positive{
+    color: var(--success);
+}
+.small{
+    height: 100px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    font-size: 300%;
+    text-align: center;
+}
+.small hr{
+    width: 100%;
+}
+.small small{
+    font-size: 50%;
+}
+.section{
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+    background: var(--light);
+    display: flex;
+}
+.section .branch{
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.section .branch .title_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 150%;
+    color: var(--dark);
+    font-weight: 700;
+    border-left: 1px solid #38d39f;
+    border-right: 1px solid #38d39f;
+    position: sticky;
+}
+.hist_dit{
+    background: var(--white);
+    height: 40px;
+    border: #cccccc10 1px solid;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hist_dit small{
+    font-size: 120%;
+}
+.dep{
+    color: var(--success);
+}
+.wit{
+    color: var(--danger);
+}
+.tra{
+    color: var(--primary);
+}
+@media only screen and (max-width: 768px){
+    nav{
+        justify-content: center;
+    }
+}
+@media only screen and (max-width: 626px){
+    body section{
+        background-color: var(--white);
+        height: 100%;
+        width: 100%;
+    }
+    
+    h3, strong{
+        font-size: 300%;
+    }
+    hr{
+        border: #cccccc30 1px solid;
+    }
+    .auth ul li a{
+        font-size: 130%;
+    }
+    .section .branch .title_box{
+        font-size: 120%!important;
+    }
+    .hist_dit{
+        padding: 0 5px;
+    }
+    .hist_dit small{
+        font-size: 90%;
+    }
+}
+@media only screen and (max-width: 330px){
+    *{
+        font-size: 9px;
+    }
+}

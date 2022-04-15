@@ -1,0 +1,86 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/static/css/main.css"> -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- <link rel="stylesheet" href="/static/css/dashboard.css"> -->
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <title>{{user.username}} dashboard</title>
+</head>
+<body>
+    <section>
+        <nav>
+            <h3>RAIL</h3> <strong>SwissBank</strong>
+        </nav>
+        <div class="action">
+            {% for detail in details %}
+            <!-- <strong>username</strong> -->
+                {% if detail.account_verified == True %}
+            <small class=" icon-check-circle positive">account is verified </small>
+                {% else %}
+            <a href="#"><small>your account is not verified, click here to verify</small></a>
+                {% endif %}
+        </div>
+        <div class="small">
+            &dollar;{{detail.account_balance|floatformat:2|intcomma}}
+            <hr>
+            <small >your account number is {{detail.account_number}} <br> your username {{user.username}}</small>
+            {% endfor %}
+        </div>
+        <div class="auth">
+            <ul>
+                <li><a href="{% url 'deposit' %}">deposit</a></li>
+                <li><a href="{% url 'withdraw' %}">withdraw</a></li>
+                <li><a href="{% url 'transfer' %}">send</a></li>
+            </ul>
+        </div>
+        <div class="section">
+            <div class="branch">
+                <div class="title_box">
+                    deposit history
+                </div>
+                {% for deposit in deposit %}
+                    <div class="hist_dit">
+                        <!-- <small class="dep">&dollar;0.00 was deposited to your account.</small> -->
+                        {% if user.username == deposit.reciver_username %}
+                         <small class="dep">{{deposit.sending_user}} trasnsfered &dollar;{{deposit.amount | intcomma}} to you was succesful</small>
+                        {% endif %}
+                    </div>
+                {%  endfor%}
+            </div>
+            <div class="branch">
+                <div class="title_box">
+                    withdrawal history
+                </div>
+                {% for debit in withdraw %}
+                    <div class="hist_dit">
+                        {% if user.username%}
+                        <small class="wit">&dollar;{{debit.amount}} withdrawn to your balance to your local bank.</small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="branch">
+                <div class="title_box">
+                    transfer history
+                </div>
+                {% for history in history %}
+                <div class="hist_dit">
+                    {% if user == history.sending_user %}
+                    <small class="tra">trasnfer of &dollar;{{history.amount|intcomma}} to {{history.reciver_account}} was succesful</small>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>
