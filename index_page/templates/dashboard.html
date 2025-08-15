@@ -2,85 +2,308 @@
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/static/css/main.css"> -->
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <!-- <link rel="stylesheet" href="/static/css/dashboard.css"> -->
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-    <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-    <title>{{user.username}} dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <title>{{user.username}} Dashboard</title>
 </head>
-<body>
-    <section>
-        <nav>
-            <h3>RAIL</h3> <strong>SwissBank</strong>
-        </nav>
-        <div class="action">
-            {% for detail in details %}
-            <!-- <strong>username</strong> -->
-                {% if detail.account_verified == True %}
-            <small class=" icon-check-circle positive">account is verified </small>
-                {% else %}
-            <a href="#"><small>your account is not verified, click here to verify</small></a>
-                {% endif %}
-        </div>
-        <div class="small">
-            &dollar;{{detail.account_balance|floatformat:2|intcomma}}
-            <hr>
-            <small >your account number is {{detail.account_number}} <br> your username {{user.username}}</small>
-            {% endfor %}
-        </div>
-        <div class="auth">
-            <ul>
-                <li><a href="{% url 'deposit' %}">deposit</a></li>
-                <li><a href="{% url 'withdraw' %}">withdraw</a></li>
-                <li><a href="{% url 'transfer' %}">send</a></li>
-            </ul>
-        </div>
-        <div class="section">
-            <div class="branch">
-                <div class="title_box">
-                    deposit history
-                </div>
-                {% for deposit in deposit %}
-                    <div class="hist_dit">
-                        <!-- <small class="dep">&dollar;0.00 was deposited to your account.</small> -->
-                        {% if user.username == deposit.reciver_username %}
-                         <small class="dep">{{deposit.sending_user}} trasnsfered &dollar;{{deposit.amount | intcomma}} to you was succesful</small>
-                        {% endif %}
+
+<body class="font-montserrat bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-r from-green-600 to-green-600 p-2 rounded-lg hidden">
+                        <i class="fas fa-university text-white text-lg"></i>
                     </div>
-                {%  endfor%}
-            </div>
-            <div class="branch">
-                <div class="title_box">
-                    withdrawal history
-                </div>
-                {% for debit in withdraw %}
-                    <div class="hist_dit">
-                        {% if user.username%}
-                        <small class="wit">&dollar;{{debit.amount}} withdrawn to your balance to your local bank.</small>
-                        {% endif %}
+                    <div>
+                        <h3
+                            class="text-xl font-bold bg-gradient-to-r from-green-600 to-green-600 bg-clip-text text-transparent">
+                            RAIL <span class="font-light text-gray-700 bold">SwissBank</span>
+                        </h3>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="branch">
-                <div class="title_box">
-                    transfer history
                 </div>
-                {% for history in history %}
-                <div class="hist_dit">
-                    {% if user == history.sending_user %}
-                    <small class="tra">trasnfer of &dollar;{{history.amount|intcomma}} to {{history.reciver_account}} was succesful</small>
+                <div class="flex items-center space-x-4">
+                    <!-- Chat Icon (Outline) -->
+                    <a href="{% url 'chat_list' %}" class="relative p-2 rounded-full hover:bg-green-100 transition"
+                        title="Chat">
+                        <i class="far fa-comments text-green-600 text-lg"></i>
+                        {% if unread_chat_count > 0 %}
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 font-bold animate-pulse">
+                            {{ unread_chat_count }}
+                        </span>
+                        {% endif %}
+                    </a>
+                    <!-- Notification Icon (Outline) -->
+                    <button class="relative p-2 rounded-full hover:bg-green-100 transition" title="Notifications">
+                        <i class="far fa-bell text-green-600 text-lg"></i>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 font-bold animate-pulse"
+                            style="display:none;">2</span>
+                    </button>
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm text-gray-600">Welcome back,</p>
+                        <p class="font-semibold text-gray-800">{{user.username}}</p>
+                    </div>
+                    <div
+                        class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% for detail in details %}
+        <!-- Account Status Alert -->
+        <div class="mb-8">
+            {% if detail.account_verified == True %}
+            <div
+                class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 flex items-center space-x-3">
+                <div class="bg-green-100 p-2 rounded-full">
+                    <i class="fas fa-check-circle text-green-600"></i>
+                </div>
+                <div>
+                    <p class="font-semibold text-green-800">Account Verified</p>
+                    <p class="text-sm text-green-600">Your account is fully verified and active</p>
+                </div>
+            </div>
+            {% else %}
+            <div
+                class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-amber-100 p-2 rounded-full">
+                        <i class="fas fa-exclamation-triangle text-amber-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-amber-800">Account Verification Required</p>
+                        <p class="text-sm text-amber-600">Complete verification to unlock all features</p>
+                    </div>
+                </div>
+                <a href="#"
+                    class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 transform hover:scale-105">
+                    Verify Now
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Balance Card -->
+        <div class="mb-8">
+            <div
+                class="bg-gradient-to-r from-green-600 via-green-700 to-green-500 rounded-2xl shadow-2xl p-8 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32">
+                </div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24">
+                </div>
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <p class="text-white/80 text-sm font-medium">Total Balance</p>
+                            <h2 class="text-4xl font-bold mt-2">
+                                &dollar;{{detail.account_balance|floatformat:2|intcomma}}</h2>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm p-3 rounded-full">
+                            <i class="fas fa-wallet text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="border-t border-white/20 pt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-white/70">Account Number</p>
+                                <p class="font-semibold">{{detail.account_number}}</p>
+                            </div>
+                            <div>
+                                <p class="text-white/70">Account Holder</p>
+                                <p class="font-semibold">{{user.username}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Quick Actions -->
+        <div class="mb-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-bolt text-blue-600 mr-2"></i>
+                Quick Actions
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <a href="{% url 'deposit' %}"
+                    class="group bg-white rounded-xl shadow-lg hover:shadow-xl p-6 transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="bg-green-100 group-hover:bg-green-200 p-3 rounded-full transition-colors duration-300">
+                            <i class="fas fa-plus text-green-600 text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Deposit</h4>
+                            <p class="text-sm text-gray-600">Add funds to account</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'withdraw' %}"
+                    class="group bg-white rounded-xl shadow-lg hover:shadow-xl p-6 transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-red-100 group-hover:bg-red-200 p-3 rounded-full transition-colors duration-300">
+                            <i class="fas fa-minus text-red-600 text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Withdraw</h4>
+                            <p class="text-sm text-gray-600">Transfer to bank</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'transfer' %}"
+                    class="group bg-white rounded-xl shadow-lg hover:shadow-xl p-6 transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="bg-blue-100 group-hover:bg-blue-200 p-3 rounded-full transition-colors duration-300">
+                            <i class="fas fa-paper-plane text-blue-600 text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Transfer</h4>
+                            <p class="text-sm text-gray-600">Send to others</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Deposit History -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="bg-gradient-to-r from-green-500 to-emerald-500 p-4">
+                    <h4 class="font-semibold text-white flex items-center">
+                        <i class="fas fa-arrow-down mr-2"></i>
+                        Deposit History
+                    </h4>
+                </div>
+                <div class="p-4 max-h-80 overflow-y-auto">
+                    {% for deposit in deposit %}
+                    {% if user.username == deposit.reciver_username %}
+                    <div
+                        class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        <div class="bg-green-100 p-2 rounded-full flex-shrink-0">
+                            <i class="fas fa-plus text-green-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">
+                                <span class="font-medium">{{deposit.sending_user}}</span> transferred
+                                <span class="font-semibold text-green-600">&dollar;{{deposit.amount|intcomma}}</span> to
+                                you
+                            </p>
+                            <p class="text-xs text-gray-500 mt-1">Transfer successful</p>
+                        </div>
+                    </div>
                     {% endif %}
+                    {% empty %}
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-inbox text-3xl mb-2"></i>
+                        <p class="text-sm">No deposits yet</p>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+            </div>
+
+            <!-- Withdrawal History -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="bg-gradient-to-r from-green-500 to-green-400 p-4">
+                    <h4 class="font-semibold text-white flex items-center">
+                        <i class="fas fa-arrow-up mr-2"></i>
+                        Withdrawal History
+                    </h4>
+                </div>
+                <div class="p-4 max-h-80 overflow-y-auto">
+                    {% for debit in withdraw %}
+                    {% if user.username %}
+                    <div
+                        class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        <div class="bg-red-100 p-2 rounded-full flex-shrink-0">
+                            <i class="fas fa-minus text-red-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">
+                                <span class="font-semibold text-red-600">&dollar;{{debit.amount}}</span> withdrawn to
+                                your local bank
+                            </p>
+                            <p class="text-xs text-gray-500 mt-1">Withdrawal successful</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% empty %}
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-inbox text-3xl mb-2"></i>
+                        <p class="text-sm">No withdrawals yet</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Transfer History -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="bg-gradient-to-r from-green-400 to-green-500 p-4">
+                    <h4 class="font-semibold text-white flex items-center">
+                        <i class="fas fa-exchange-alt mr-2"></i>
+                        Transfer History
+                    </h4>
+                </div>
+                <div class="p-4 max-h-80 overflow-y-auto">
+                    {% for history in history %}
+                    {% if user == history.sending_user %}
+                    <div
+                        class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        <div class="bg-blue-100 p-2 rounded-full flex-shrink-0">
+                            <i class="fas fa-paper-plane text-blue-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">
+                                Transfer of <span
+                                    class="font-semibold text-blue-600">&dollar;{{history.amount|intcomma}}</span>
+                                to <span class="font-medium">{{history.reciver_account}}</span>
+                            </p>
+                            <p class="text-xs text-gray-500 mt-1">Transfer successful</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% empty %}
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-inbox text-3xl mb-2"></i>
+                        <p class="text-sm">No transfers yet</p>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 </body>
+
 </html>

@@ -1,57 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/static/css/style.css">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Withdrawal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
 
-    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+      backdrop-filter: blur(8px);
+      border-radius: 1.5rem;
+    }
+  </style>
+</head>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    
-    <!-- Style -->
-    <link rel="stylesheet" href="/static/css/style_form.css">
-
-    <title>withdrawal form procced</title>
-  </head>
-  <body>
-  
-
-  
-  <div class="content">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 order-md-2">
-          <img src="/static/images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+<body class="bg-gradient-to-br from-green-50 via-blue-50 to-white min-h-screen flex items-center justify-center py-8">
+  <div class="w-full max-w-md mx-auto px-4">
+    <div class="glass p-8 md:p-10 text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-gradient-to-r from-green-500 to-green-500 p-4 rounded-full shadow-lg">
+          <i class="fas fa-university text-white text-4xl"></i>
         </div>
-        <div class="col-md-6 contents">
-          <div class="row justify-content-center">
-            <div class="col-md-8">
-              <div class="mb-4">
-              <h3><strong>PLEASE CONFIRM TRANSACTION</strong></h3>
-              <p class="mb-4 text-success">You Are About To Transfer &dollar;100 To A Local Bank Account</p>
-            </div>
-              
-              <a href="#" class=" btn text-white btn-block btn-primary" style="text-decoration: none; text-transform: capitalize; display: flex; align-items: center; justify-content: center;">Yes, Proceed To Payment</a>
-              <br>
-              <a href="#" class=" btn text-white btn-block btn-danger" style="text-decoration: none; text-transform: capitalize; display: flex; align-items: center; justify-content: center;">No, Back To Dashboard</a>
-            </div>
-          </div>
-          
-        </div>
-        
+      </div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">Please Confirm Transaction</h2>
+      <p class="text-green-600 font-semibold mb-6 text-lg">You are about to transfer <span
+          class="text-blue-700">Money</span> to a local bank account.</p>
+      <div class="flex flex-col gap-3">
+        <a href="#"
+          class="w-full bg-gradient-to-r from-green-500 to-green-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-2.5 rounded-lg shadow-lg transition-all text-lg flex items-center justify-center gap-2">
+          <i class="fas fa-check"></i> Yes, Proceed To Payment
+        </a>
+        <a href="#"
+          class="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-bold py-2.5 rounded-lg shadow-lg transition-all text-lg flex items-center justify-center gap-2">
+          <i class="fas fa-times"></i> No, Back To Dashboard
+        </a>
       </div>
     </div>
+    <div class="text-center mt-6 text-gray-400 text-xs">
+      &copy; {{ now|date:'Y' }} RAIL SwissBank. All rights reserved.
+    </div>
   </div>
+</body>
 
-  
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-  </body>
 </html>

@@ -1,4 +1,4 @@
-import imp
+# import imp
 from django.contrib import admin
 from .models import AccountDetail, Transfer, Withdraw, Deposit
 # Register your models here.

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start a Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
+    <div class="max-w-2xl mx-auto py-12 px-4">
+        <div class="mb-6 flex justify-between items-center">
+            <a href="{% url 'dashboard' %}"
+                class="inline-flex items-center text-green-600 hover:text-green-800 font-semibold transition">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+            </a>
+            <h2 class="text-3xl font-extrabold text-green-700 tracking-tight">Start a Chat</h2>
+        </div>
+        <ul class="divide-y divide-gray-200 bg-white rounded-2xl shadow-xl overflow-hidden">
+            {% for user in users %}
+            <a href="{% url 'chat_room' user.id %}"
+                class="flex items-center justify-between px-6 py-4 hover:bg-green-50 transition group">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-green-600 text-xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 text-lg">{{ user.username }}</span>
+                </div>
+                <a href="{% url 'chat_room' user.id %}"
+                    class="flex items-center text-green-600 hover:text-green-800 font-semibold transition hidden">
+                    Chat <i class="far fa-comments ml-2 text-lg"></i>
+                </a>
+            </a>
+            {% empty %}
+            <li class="px-6 py-10 text-center text-gray-500 text-lg">No other users found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,26 +1,56 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="{% static 'css/error.css' %}">
-    <title>error! invalid user</title>
-</head>
-<body>
-    <section>
-        <div class="container">
-            <strong class="icon-warning2"></strong>
-            <h1>the amount you wish to transfer is above your account balance</h1>
-            <h2>please deposit funds to your account and try again. <br> ask customer care for help to make deposit</h2>
+    <title>Insufficient Balance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
 
-            <a href="{% url 'dashboard' %}">back to dashboard</a>
-            <a class="green" href="#">customer care</a>
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-red-50 via-orange-50 to-white min-h-screen flex items-center justify-center py-8">
+    <div class="w-full max-w-md mx-auto px-4">
+        <div class="glass p-8 md:p-10 text-center">
+            <div class="flex justify-center mb-4">
+                <div class="bg-gradient-to-r from-red-500 to-red-400 p-4 rounded-full shadow-lg">
+                    <i class="fas fa-wallet text-white text-4xl"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Insufficient Balance</h2>
+            <p class="text-red-600 font-semibold mb-4 text-lg">The amount you wish to transfer is above your account
+                balance.</p>
+            <p class="text-gray-600 mb-6">Please deposit funds to your account and try again.<br>Ask customer care for
+                help to make a deposit.</p>
+            <div class="flex flex-col gap-3">
+                <a href="{% url 'dashboard' %}"
+                    class="w-full bg-gradient-to-r from-green-500 to-green-500 hover:from-green-600 hover:to-green-600 text-white font-bold py-2.5 rounded-lg shadow-lg transition-all text-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+                <a href="{% url 'chat_list' %}"
+                    class="w-full bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold py-2.5 rounded-lg shadow-lg transition-all text-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-headset"></i> Customer Care
+                </a>
+            </div>
         </div>
-    </section>
+        <div class="text-center mt-6 text-gray-400 text-xs">
+            &copy; {{ now|date:'Y' }} RAIL SwissBank. All rights reserved.
+        </div>
+    </div>
 </body>
+
 </html>

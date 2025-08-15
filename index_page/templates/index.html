@@ -1,26 +1,260 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A Safe And Secure Online MicroFinance Bank For Everyone.">
-    <!-- <link rel="stylesheet" href="/static/css/main.css"> -->
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <title>RAIL MicroFinance Bank|HomePage</title>
+    <title>RAIL MicroFinance Bank | HomePage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- AOS Animate On Scroll CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <section class="landing_page">
-        <div class="container banner">
-            <strong>welcome to RAIL MicroFinance Bank. safe and fast transfer of money locally and internationally.</strong>
-            <div class="container auth">
-                <ul>
-                    <li><a href="{% url 'login' %}">login</a></li>
-                    <li><a href="{% url 'register' %}">open a free account</a></li>
-                </ul>
+
+<body class="bg-gradient-to-br from-green-600 to-green-400 text-green-900 overflow-x-hidden">
+
+    <!-- HEADER -->
+    <nav class="flex items-center justify-between px-6 py-4 bg-green-700 shadow-lg sticky top-0 z-50"
+        data-aos="fade-down">
+        <div class="flex items-center gap-2">
+            <span class="text-xl font-bold text-white">RAIL MicroFinance</span>
+        </div>
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex space-x-3">
+            <a href="{% url 'login' %}"
+                class="bg-green-900 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-500 transition">Login</a>
+            <a href="{% url 'register' %}"
+                class="bg-white text-green-700 px-4 py-2 rounded-lg font-semibold hover:bg-green-100 transition">
+                Open Free Account
+            </a>
+        </div>
+        <!-- Mobile Hamburger -->
+        <button id="sidebarToggle" class="md:hidden text-white text-2xl focus:outline-none hidden" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+    <!-- Sidebar Overlay -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-40 z-[99] hidden transition-opacity duration-300">
+    </div>
+    <!-- Sidebar Nav (Right, Circular Wobbly Reveal) -->
+    <aside id="sidebarNav"
+        class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-[100] pointer-events-none md:hidden flex flex-col justify-start items-stretch translate-x-full opacity-0 transition-all duration-300">
+        <div class="flex items-center justify-between px-6 py-4 border-b">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-coins text-green-700 text-2xl"></i>
+                <span class="text-xl font-bold text-green-700">RAIL MicroFinance</span>
+            </div>
+            <button id="sidebarClose" class="text-green-700 text-2xl focus:outline-none" aria-label="Close menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-2 px-6 py-6">
+            <a href="{% url 'login' %}"
+                class="py-2 px-3 rounded hover:bg-green-50 text-green-800 font-semibold flex items-center gap-2"><i
+                    class="fa-solid fa-right-to-bracket"></i> Login</a>
+            <a href="{% url 'register' %}"
+                class="py-2 px-3 rounded hover:bg-green-100 text-green-700 font-semibold flex items-center gap-2"><i
+                    class="fa-solid fa-user-plus"></i> Open Free Account</a>
+        </nav>
+    </aside>
+
+    <!-- HERO -->
+    <section class="relative flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto px-6 py-16 gap-10"
+        data-aos="fade-up">
+        <!-- Decorative SVG white stroke lines -->
+        <svg class="absolute left-0 top-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1200 400" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 100 Q300 50 500 120 T1100 100" stroke="#fff" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" opacity="0.5" />
+            <path d="M150 200 Q400 300 700 180 T1150 250" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" opacity="0.35" />
+            <path d="M80 320 Q600 350 1120 320" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" opacity="0.25" />
+        </svg>
+        <div class="flex-1 text-center md:text-left z-10 relative" data-aos="fade-right">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                Modern Banking for <span class="text-green-200">Everyone</span>
+            </h1>
+            <p class="text-green-50 mb-6 text-lg">Secure, fast, and accessible microfinance banking at your fingertips.
+                Start today and take control of your financial future.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a href="{% url 'register' %}"
+                    class="bg-white text-green-700 px-6 py-3 rounded-lg font-bold hover:bg-green-100 transition flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus"></i> Get Started
+                </a>
+                <a href="{% url 'login' %}"
+                    class="bg-green-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-900 transition flex items-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex justify-center z-10 relative" data-aos="fade-left">
+            <img src="{% static 'images/homebg.jpg' %}" alt="Banking Illustration"
+                class="w-64 h-64 md:w-96 md:h-96 object-cover object-center drop-shadow-xl rounded-full border-8 border-white shadow-lg transition-all duration-300">
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="bg-white py-12 shadow-inner" data-aos="fade-up">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div data-aos="fade-right">
+                <h3 class="text-3xl font-bold text-green-700">50K+</h3>
+                <p class="text-sm text-green-800">Happy Customers</p>
+            </div>
+            <div data-aos="fade-left">
+                <h3 class="text-3xl font-bold text-green-700">$2B+</h3>
+                <p class="text-sm text-green-800">Transactions Processed</p>
+            </div>
+            <div data-aos="fade-right">
+                <h3 class="text-3xl font-bold text-green-700">15+</h3>
+                <p class="text-sm text-green-800">Countries Served</p>
+            </div>
+            <div data-aos="fade-left">
+                <h3 class="text-3xl font-bold text-green-700">24/7</h3>
+                <p class="text-sm text-green-800">Support Availability</p>
             </div>
         </div>
     </section>
+
+    <!-- FEATURES -->
+    <section class="py-16 px-6 bg-green-50" data-aos="fade-up">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-green-700 mb-8">Why Choose RAIL MicroFinance?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="fade-right">
+                    <i class="fa-solid fa-shield-halved text-3xl text-green-600 mb-4"></i>
+                    <h4 class="font-bold text-green-700 mb-2">Secure Banking</h4>
+                    <p class="text-green-800">Industry-leading encryption to protect your funds and data.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="fade-up">
+                    <i class="fa-solid fa-bolt text-3xl text-green-600 mb-4"></i>
+                    <h4 class="font-bold text-green-700 mb-2">Fast Transactions</h4>
+                    <p class="text-green-800">Instant money transfers anytime, anywhere.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="fade-left">
+                    <i class="fa-solid fa-globe text-3xl text-green-600 mb-4"></i>
+                    <h4 class="font-bold text-green-700 mb-2">Global Access</h4>
+                    <p class="text-green-800">Manage your finances from any device worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-16 px-6 bg-white" data-aos="fade-up">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-green-700 mb-10">What Our Clients Say</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-right">
+                    <p class="text-green-800 italic">"RAIL MicroFinance has completely transformed how I send and
+                        receive money. Super reliable!"</p>
+                    <div class="mt-4 flex items-center justify-center gap-3">
+                        <img src="{% static 'images/profile.jpg' %}" class="w-10 h-10 rounded-full">
+                        <span class="font-semibold text-green-700">Richard L.</span>
+                    </div>
+                </div>
+                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-up">
+                    <p class="text-green-800 italic">"The best customer support I’ve experienced. They really care about
+                        their customers."</p>
+                    <div class="mt-4 flex items-center justify-center gap-3">
+                        <img src="{% static 'images/profile.jpg' %}" class="w-10 h-10 rounded-full">
+                        <span class="font-semibold text-green-700">John M.</span>
+                    </div>
+                </div>
+                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-left">
+                    <p class="text-green-800 italic">"Fast transfers and no hidden fees — exactly what I needed."</p>
+                    <div class="mt-4 flex items-center justify-center gap-3">
+                        <img src="{% static 'images/profile.jpg' %}" class="w-10 h-10 rounded-full">
+                        <span class="font-semibold text-green-700">Hermony O.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-green-700 text-white text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-bold mb-4">Ready to Experience Modern Banking?</h2>
+        <p class="mb-8">Join thousands of customers who trust RAIL MicroFinance every day.</p>
+        <a href="{% url 'register' %}"
+            class="bg-white text-green-700 px-6 py-3 rounded-lg font-bold hover:bg-green-100 transition">
+            Open Your Account Now
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-green-800 text-green-100 text-sm py-6 text-center" data-aos="fade-up">
+        &copy; {{ now|date:'Y' }} RAIL MicroFinance Bank. All rights reserved.
+    </footer>
+
+    <style>
+        /* Sidebar normal slide-in */
+        #sidebarNav.sidebar-active {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #sidebarNav {
+            pointer-events: none;
+        }
+    </style>
+    <style>
+        /* Custom styles for the sidebar */
+        #sidebarNav {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        #sidebarOverlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #sidebarOverlay.hidden {
+            display: none;
+        }
+
+        #sidebarNav.sidebar-active {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+    <!-- AOS Animate On Scroll JS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 700,
+            once: true,
+            mirror: true
+        });
+        // Sidebar logic for right, circular wobbly reveal
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarNav = document.getElementById('sidebarNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+
+        function openSidebar() {
+            sidebarNav.classList.add('sidebar-active');
+            sidebarOverlay.classList.remove('hidden');
+            setTimeout(() => sidebarOverlay.classList.add('opacity-100'), 10);
+        }
+        function closeSidebar() {
+            sidebarNav.classList.remove('sidebar-active');
+            sidebarOverlay.classList.remove('opacity-100');
+            setTimeout(() => sidebarOverlay.classList.add('hidden'), 300);
+        }
+        sidebarToggle && sidebarToggle.addEventListener('click', openSidebar);
+        sidebarClose && sidebarClose.addEventListener('click', closeSidebar);
+        sidebarOverlay && sidebarOverlay.addEventListener('click', closeSidebar);
+    </script>
 </body>
+
 </html>

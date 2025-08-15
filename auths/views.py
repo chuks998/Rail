@@ -1,14 +1,10 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from dashboard.models import AccountDetail
 from .forms import Register
-# from django.contrib.sites.shortcuts import get_current_site
-# from django.utils.encoding import force_bytes
-# from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-# from django.template.loader import render_to_string
-# from .token import TokenGenarator
-
+from django.db import IntegrityError
 
 
 # Create your views here.
@@ -16,28 +12,34 @@ from .forms import Register
 
 def login_user(request):
     logout(request)
-    username = password = ''
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+    error = None
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
 
         user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect('dashboard')
+        if user is not None and user.is_active:
+            login(request, user)
+            return redirect("dashboard")
         else:
-            return redirect('login')
-    return render(request, 'login_form.html')
+            error = "Invalid username or password."
+    return render(request, "login_form.html", {"error": error})
+
 
 def register(request):
     form = Register()
-
-    if request.method == 'POST':
+    integrity_error = None
+    if request.method == "POST":
         form = Register(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
-    contex = {'form': form}
-    return render(request, 'register.html', contex)
-
+            try:
+                form.save()
+                messages.success(
+                    request, "Registration successful! You can now log in."
+                )
+                return redirect("login")
+            except IntegrityError:
+                integrity_error = "A user with that username or email already exists."
+        # If not valid, errors will be shown in template
+    context = {"form": form, "integrity_error": integrity_error}
+    return render(request, "register.html", context)

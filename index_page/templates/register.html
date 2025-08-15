@@ -1,109 +1,414 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | RAIL MicroFinance</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'inter': ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-in-out',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          backdropBlur: {
+            'xs': '2px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
 
-    <!-- <link rel="stylesheet" href="/static/css/owl.carousel.min.css"> -->
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
 
-    <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="/static/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    
-    <!-- Style -->
-    <!-- <link rel="stylesheet" href="/static/css/style_form.css"> -->
-    <link rel="stylesheet" href="{% static 'css/style_form.css' %}">
+      to {
+        opacity: 1;
+      }
+    }
 
-    <title>Login to your account|login to RAIL</title>
-  </head>
-  <body>
-  
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
 
-  
-  <div class="content">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 order-md-2">
-          <img src="/static/images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
-        </div>
-        <div class="col-md-6 contents">
-          <div class="row justify-content-center">
-            <div class="col-md-8">
-              <div class="mb-4">
-              <h3>Welcome To <strong>RAIL</strong></h3>
-              <p class="mb-4">Please Ensure You Fill In Each Block Correctly.</p>
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      33% {
+        transform: translateY(-10px) rotate(1deg);
+      }
+
+      66% {
+        transform: translateY(5px) rotate(-1deg);
+      }
+    }
+
+    .floating-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .shape {
+      position: absolute;
+      background: linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+      width: 100px;
+      height: 100px;
+      top: 20%;
+      left: 10%;
+      animation-delay: -2s;
+    }
+
+    .shape:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      right: 10%;
+      animation-delay: -4s;
+    }
+
+    .shape:nth-child(3) {
+      width: 80px;
+      height: 80px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: -6s;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .form-input:hover {
+      border-color: #d1d5db;
+    }
+
+    .form-label {
+      position: absolute;
+      left: 1rem;
+      top: 0.875rem;
+      color: #6b7280;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      background: linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255, 255, 255, 0.9) 45%, rgba(255, 255, 255, 0.9) 55%, transparent 55%);
+    }
+
+    .form-input:focus+.form-label,
+    .form-input:not(:placeholder-shown)+.form-label {
+      top: -0.5rem;
+      font-size: 0.8rem;
+      color: #10b981;
+      font-weight: 600;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      cursor: pointer;
+      padding: 0.25rem;
+      transition: color 0.2s ease;
+    }
+
+    .password-toggle:hover {
+      color: #10b981;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .error-message {
+      animation: slideUp 0.3s ease-out;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 relative overflow-x-hidden">
+  <!-- Floating Background Shapes -->
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <div class="min-h-screen flex items-center justify-center p-4 relative z-10">
+    <div
+      class="w-full max-w-6xl glass-card rounded-3xl shadow-2xl flex flex-col lg:flex-row overflow-hidden animate-fade-in">
+
+      <!-- IMAGE SECTION -->
+      <div
+        class="w-full lg:w-2/5 bg-gradient-to-br from-emerald-50 to-green-50 flex flex-col items-center justify-center p-8 lg:p-12 relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-100/50 to-transparent"></div>
+        <div class="relative z-10 text-center">
+          <div class="mb-8">
+            <div
+              class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg hidden">
+              <i class="fas fa-user-plus text-white text-2xl"></i>
             </div>
-            <form action="{% url 'register' %}" method="post">
-              {% csrf_token %}
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Join RAIL</h1>
+            <p class="text-gray-600 font-medium">Start your financial journey today</p>
+          </div>
+          <img src="{% static 'images/undraw_file_sync_ot38.svg' %}" alt="Register Illustration"
+            class="w-72 max-w-full animate-float">
+        </div>
+      </div>
 
-              <div class="form-group first">
-                <label for="username">First Name</label>
-                <!-- <input type="text" class="form-control" id="first" name="first_name"> -->
-                {{form.first_name}}
+      <!-- FORM SECTION -->
+      <div class="w-full lg:w-3/5 flex flex-col justify-center p-8 lg:p-12 animate-slide-up">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
+          <p class="text-gray-600">Enter your details to get started</p>
+        </div>
+
+        <form action="{% url 'register' %}" method="post" class="space-y-6">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+          <div class="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded">
+            {% for error in form.non_field_errors %}{{ error }}<br>{% endfor %}
+          </div>
+          {% endif %}
+          {% if integrity_error %}
+          <div class="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded">
+            <i class="fas fa-exclamation-circle mr-2"></i>{{ integrity_error }}
+          </div>
+          {% endif %}
+
+          <!-- Name Fields Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- FIRST NAME -->
+            <div class="form-group">
+              {% if form.first_name.errors %}
+              <div class="text-red-500 text-sm mb-2 error-message">
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                {{ form.first_name.errors.0 }}
               </div>
+              {% endif %}
+              <input type="text" name="first_name" id="id_first_name" class="form-input" placeholder=" "
+                value="{{ form.first_name.value|default:'' }}">
+              <label class="form-label" for="id_first_name">First Name</label>
+            </div>
 
-              <div class="form-group first">
-                <label for="username">Last Name</label>
-                <!-- <input type="text" class="form-control" id="last" name="last_name"> -->
-                {{form.last_name}}
+            <!-- LAST NAME -->
+            <div class="form-group">
+              {% if form.last_name.errors %}
+              <div class="text-red-500 text-sm mb-2 error-message">
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                {{ form.last_name.errors.0 }}
               </div>
-
-              <div class="form-group first">
-                <label for="username">Username</label>
-                <!-- <input type="text" class="form-control" id="username" name="username"> -->
-                {{form.username}}
-              </div>              
-
-              <div class="form-group first">
-                <label for="username">Email</label>
-                <!-- <input type="email" name="email" class="form-control"  id="email"> -->
-                {{form.email}}
-              </div>
-
-              <div class="form-group last mb-4">
-                <label for="password">Password</label>
-                <!-- <input type="password" class="form-control" id="password" name="password"> -->
-                {{form.password1}}
-              </div>
-
-              <div class="form-group last mb-4">
-                <label for="password">Confirm Password</label>
-                <!-- <input type="password" class="form-control" id="password1" name="password"> -->
-                {{form.password2}}
-              </div>
-              
-              <div class="d-flex mb-5 align-items-center">
-                  <!-- <div class="control__indicator"></div> -->
-                <span class="ml-auto"><a href="{% url 'login' %}" class="forgot-pass">Already Have An Account? Login</a></span> 
-              </div>
-
-              <input type="submit" value="Register" class="btn text-white btn-block btn-primary">
-
-            </form>
+              {% endif %}
+              <input type="text" name="last_name" id="id_last_name" class="form-input" placeholder=" "
+                value="{{ form.last_name.value|default:'' }}">
+              <label class="form-label" for="id_last_name">Last Name</label>
             </div>
           </div>
-          
+
+          <!-- USERNAME -->
+          <div class="form-group">
+            {% if form.username.errors %}
+            <div class="text-red-500 text-sm mb-2 error-message">
+              <i class="fas fa-exclamation-triangle mr-1"></i>
+              {{ form.username.errors.0 }}
+            </div>
+            {% endif %}
+            <input type="text" name="username" id="id_username" class="form-input" placeholder=" "
+              value="{{ form.username.value|default:'' }}">
+            <label class="form-label" for="id_username">Username</label>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="form-group">
+            {% if form.email.errors %}
+            <div class="text-red-500 text-sm mb-2 error-message">
+              <i class="fas fa-exclamation-triangle mr-1"></i>
+              {{ form.email.errors.0 }}
+            </div>
+            {% endif %}
+            <input type="email" name="email" id="id_email" class="form-input" placeholder=" "
+              value="{{ form.email.value|default:'' }}">
+            <label class="form-label" for="id_email">Email Address</label>
+          </div>
+
+          <!-- Password Fields Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- PASSWORD 1 -->
+            <div class="form-group">
+              {% if form.password1.errors %}
+              <div class="text-red-500 text-sm mb-2 error-message">
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                {{ form.password1.errors.0 }}
+              </div>
+              {% endif %}
+              <input type="password" name="password1" id="id_password1" class="form-input pr-12" placeholder=" ">
+              <label class="form-label" for="id_password1">Password</label>
+              <i class="fas fa-eye password-toggle" data-target="id_password1"></i>
+            </div>
+
+            <!-- PASSWORD 2 -->
+            <div class="form-group">
+              {% if form.password2.errors %}
+              <div class="text-red-500 text-sm mb-2 error-message">
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                {{ form.password2.errors.0 }}
+              </div>
+              {% endif %}
+              <input type="password" name="password2" id="id_password2" class="form-input pr-12" placeholder=" ">
+              <label class="form-label" for="id_password2">Confirm Password</label>
+              <i class="fas fa-eye password-toggle" data-target="id_password2"></i>
+            </div>
+          </div>
+
+          <!-- LOGIN LINK -->
+          <div class="flex items-center justify-center mt-6">
+            <span class="text-gray-600 mr-2">Already have an account?</span>
+            <a href="{% url 'login' %}"
+              class="text-emerald-600 font-semibold hover:text-emerald-700 hover:underline transition-colors">
+              Sign In
+            </a>
+          </div>
+
+          <!-- SUBMIT -->
+          <button type="submit" class="w-full py-4 submit-btn text-white font-semibold rounded-xl shadow-lg text-lg">
+            <i class="fas fa-user-plus mr-2"></i>
+            Create Account
+          </button>
+        </form>
+
+        <!-- Additional Links -->
+        <div class="mt-8 text-center">
+          <p class="text-xs text-gray-500">
+            By creating an account, you agree to our
+            <a href="#" class="text-emerald-600 hover:underline">Terms of Service</a>
+            and
+            <a href="#" class="text-emerald-600 hover:underline">Privacy Policy</a>
+          </p>
         </div>
-        
       </div>
     </div>
   </div>
 
-  
-    <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <!-- <script src="js/popper.min.js"></script> -->
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+  <!-- Enhanced Password Toggle Script -->
+  <script>
+    // Password toggle functionality
+    document.querySelectorAll('.password-toggle').forEach(icon => {
+      icon.addEventListener('click', function () {
+        const target = document.getElementById(this.dataset.target);
+        const isPassword = target.type === 'password';
 
-    
-  </body>
+        target.type = isPassword ? 'text' : 'password';
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+
+        // Add a subtle animation
+        this.style.transform = 'translateY(-50%) scale(0.9)';
+        setTimeout(() => {
+          this.style.transform = 'translateY(-50%) scale(1)';
+        }, 100);
+      });
+    });
+
+    // Form validation feedback
+    document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('blur', function () {
+        if (this.checkValidity()) {
+          this.style.borderColor = '#10b981';
+        } else if (this.value) {
+          this.style.borderColor = '#ef4444';
+        }
+      });
+
+      input.addEventListener('input', function () {
+        if (this.style.borderColor === '#ef4444' && this.checkValidity()) {
+          this.style.borderColor = '#10b981';
+        }
+      });
+    });
+
+    // Enhanced form submission
+    document.querySelector('form').addEventListener('submit', function (e) {
+      const submitBtn = this.querySelector('button[type="submit"]');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating Account...';
+      submitBtn.disabled = true;
+    });
+  </script>
+</body>
+
 </html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ other_user.username }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'pulse-subtle': 'pulseSubtle 2s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseSubtle {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .glass {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark .glass {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message-bubble {
+            transition: all 0.3s ease;
+        }
+
+        .message-bubble:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .message-bubble:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(45deg, #2c8b4c, #158540, #29750b, #359e1b);
+            padding: 2px;
+            border-radius: 12px;
+        }
+
+        .gradient-border-inner {
+            background: white;
+            border-radius: 10px;
+        }
+
+        .dark .gradient-border-inner {
+            background: #1f2937;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.8);
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: rgba(75, 85, 99, 0.5);
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: rgba(75, 85, 99, 0.8);
+        }
+
+        .typing-indicator::after {
+            content: '...';
+            animation: pulseSubtle 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body
+    class="min-h-screen transition-colors duration-300 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-purple-900 dark:to-slate-900">
+    <!-- Floating background elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div
+            class="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse">
+        </div>
+        <div
+            class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse">
+        </div>
+        <div
+            class="absolute top-40 left-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse">
+        </div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="glass rounded-b-3xl mx-4 mt-4 p-6 animate-slide-up">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'chat_list' %}"
+                        class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/20 hover:bg-white/30 dark:bg-black/20 dark:hover:bg-black/30 transition-all duration-300 group">
+                        <i
+                            class="fas fa-arrow-left text-lg group-hover:-translate-x-1 transition-transform duration-300 text-black dark:text-white"></i>
+                        <span class="font-medium text-black dark:text-white">Back</span>
+                    </a>
+
+                    <!-- User avatar and status -->
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <div
+                                class="w-12 h-12 bg-gradient-to-r from-green-400 to-green-400 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">{{ other_user.username|first|upper }}</span>
+                            </div>
+                            <div
+                                class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full">
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800 dark:text-white">{{ other_user.username }}</h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Online</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme toggle and options -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="toggleTheme()"
+                        class="p-3 rounded-xl bg-white/20 hover:bg-white/30 dark:bg-white/20 dark:hover:bg-white/30 transition-all duration-300">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                    <button
+                        class="p-3 rounded-xl bg-white/20 hover:bg-white/30 dark:bg-black/20 dark:hover:bg-black/30 transition-all duration-300 hidden">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Chat Messages Container -->
+        <main class="flex-1 px-4 py-6 mb-20">
+            <div class="glass rounded-3xl p-6 h-90 overflow-y-auto relative" id="chat-messages">
+                <div class="space-y-4">
+                    {% for msg in messages %}
+                    <div
+                        class="flex animate-fade-in {% if msg.sender == request.user %}justify-end{% else %}justify-start{% endif %}">
+                        <div
+                            class="message-bubble max-w-xs lg:max-w-md group {% if msg.sender == request.user %}ml-auto{% endif %}">
+                            {% if msg.sender == request.user %}
+                            <!-- Sent message -->
+                            <div class="gradient-border">
+                                <div class="gradient-border-inner p-4">
+                                    {% if msg.message %}
+                                    <p class="text-gray-800 dark:text-white">{{ msg.message }}</p>
+                                    {% endif %}
+                                    {% if msg.image %}
+                                    <img src="{{ msg.image.url }}" alt="Image"
+                                        class="mt-3 rounded-lg max-h-40 w-full object-cover">
+                                    {% endif %}
+                                    <div class="flex items-center justify-end mt-2 space-x-1">
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">{{
+                                            msg.timestamp|date:'H:i' }}</span>
+                                        <i class="fas fa-check-double text-xs text-blue-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <!-- Received message -->
+                            <div
+                                class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700">
+                                {% if msg.message %}
+                                <p class="text-gray-800 dark:text-white">{{ msg.message }}</p>
+                                {% endif %}
+                                {% if msg.image %}
+                                <img src="{{ msg.image.url }}" alt="Image"
+                                    class="mt-3 rounded-lg max-h-40 w-full object-cover">
+                                {% endif %}
+                                <span class="block text-xs text-gray-500 dark:text-gray-400 mt-2">{{
+                                    msg.timestamp|date:'H:i' }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="flex flex-col items-center justify-center py-12 text-center">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-r from-green-400 to-green-400 rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-comments text-white text-xl"></i>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">No messages yet</p>
+                        <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Start the conversation with a hello!
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+
+        <!-- Message Input -->
+        <footer class="px-4 pb-6 fixed bottom-0 left-0 right-0">
+            <form method="post" enctype="multipart/form-data" class="glass rounded-3xl p-4">
+                {% csrf_token %}
+                <div class="flex items-center space-x-3">
+                    <!-- Attachment button -->
+                    <input type="file" name="image" accept="image/*" class="hidden" id="image-input">
+                    <label for="image-input"
+                        class="p-3 rounded-xl bg-white/20 hover:bg-white/30 dark:bg-white/20 dark:hover:bg-white/30 cursor-pointer transition-all duration-300 group">
+                        <i
+                            class="fas fa-paperclip text-lg group-hover:rotate-45 transition-transform duration-300 text-black/30 dark:text-white"></i>
+                    </label>
+
+                    <!-- Message input -->
+                    <div class="flex-1 relative">
+                        <input type="text" name="message" placeholder="Type your message..."
+                            class="w-full bg-white dark:bg-white/50 border-0 rounded-2xl px-6 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-green-400 dark:focus:ring-green-500 placeholder-gray-500 dark:placeholder-white text-gray-800 dark:text-white transition-all duration-300"
+                            autocomplete="off">
+                        <button type="button"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-smile"></i>
+                        </button>
+                    </div>
+
+                    <!-- Send button -->
+                    <button type="submit"
+                        class="p-3 bg-gradient-to-r from-green-500 to-green-500 hover:from-green-600 hover:to-green-600 text-white rounded-xl font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </footer>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Initialize theme from localStorage
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Auto-scroll to bottom of chat
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Scroll to bottom on load
+        window.addEventListener('load', scrollToBottom);
+
+        // Add send button click animation
+        document.querySelector('button[type="submit"]').addEventListener('click', function (e) {
+            this.classList.add('animate-pulse');
+            setTimeout(() => {
+                this.classList.remove('animate-pulse');
+            }, 200);
+        });
+
+        // Add typing animation to input
+        const messageInput = document.querySelector('input[name="message"]');
+        messageInput.addEventListener('input', function () {
+            if (this.value.length > 0) {
+                this.classList.add('ring-2', 'ring-purple-400', 'dark:ring-purple-500');
+            } else {
+                this.classList.remove('ring-2', 'ring-purple-400', 'dark:ring-purple-500');
+            }
+        });
+
+        // Simulate typing indicator (for demo purposes)
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chat-messages');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'flex justify-start animate-fade-in';
+            typingDiv.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700">
+                    <span class="text-gray-500 dark:text-gray-400 typing-indicator">Typing</span>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+    </script>
+
+    <script>
+        const userId = {{ other_user.id }};
+        const currentUser = {{ request.user.id }};
+
+
+        // --- Improved polling: only update DOM if messages changed ---
+        let lastMessageIds = [];
+
+        function renderMessage(msg) {
+            const isSelf = msg.sender_id === currentUser;
+            let html = '';
+            const imageTag = (msg.image_url && msg.image_url !== '' && !msg.image_url.endsWith('/None'))
+                ? `<img src="${msg.image_url}" alt="Image" class="mt-3 rounded-lg max-h-40 w-full object-cover" onerror="this.style.display='none'">`
+                : '';
+            if (isSelf) {
+                html = `
+                <div class="flex animate-fade-in justify-end" data-id="${msg.id}">
+                    <div class="message-bubble max-w-xs lg:max-w-md group ml-auto">
+                        <div class="gradient-border">
+                            <div class="gradient-border-inner p-4">
+                                ${msg.message ? `<p class=\"text-gray-800 dark:text-white\">${msg.message}</p>` : ''}
+                                ${imageTag}
+                                <div class="flex items-center justify-end mt-2 space-x-1">
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">${msg.timestamp}</span>
+                                    <i class="fas fa-check-double text-xs text-blue-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            } else {
+                html = `
+                <div class="flex animate-fade-in justify-start" data-id="${msg.id}">
+                    <div class="message-bubble max-w-xs lg:max-w-md group">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-700">
+                            ${msg.message ? `<p class=\"text-gray-800 dark:text-white\">${msg.message}</p>` : ''}
+                            ${imageTag}
+                            <span class="block text-xs text-gray-500 dark:text-gray-400 mt-2">${msg.timestamp}</span>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            return html;
+        }
+
+        function fetchMessages() {
+            fetch(`/chat/messages/${userId}/`)
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.querySelector('#chat-messages .space-y-4');
+                    const newIds = data.messages.map(m => m.id);
+                    // Only update if messages changed
+                    if (JSON.stringify(newIds) !== JSON.stringify(lastMessageIds)) {
+                        container.innerHTML = '';
+                        if (data.messages.length === 0) {
+                            container.innerHTML = `<div class=\"flex flex-col items-center justify-center py-12 text-center\">
+                                <div class=\"w-16 h-16 bg-gradient-to-r from-green-400 to-green-400 rounded-full flex items-center justify-center mb-4\">
+                                    <i class=\"fas fa-comments text-white text-xl\"></i>
+                                </div>
+                                <p class=\"text-gray-500 dark:text-gray-400 text-lg font-medium\">No messages yet</p>
+                                <p class=\"text-gray-400 dark:text-gray-500 text-sm mt-1\">Start the conversation with a hello!</p>
+                            </div>`;
+                        } else {
+                            data.messages.forEach(msg => {
+                                container.innerHTML += renderMessage(msg);
+                            });
+                        }
+                        // Scroll if user is near bottom
+                        const chatBox = document.getElementById('chat-messages');
+                        const isNearBottom = chatBox.scrollHeight - chatBox.scrollTop - chatBox.clientHeight < 50;
+                        if (isNearBottom) {
+                            chatBox.scrollTop = chatBox.scrollHeight;
+                        }
+                        lastMessageIds = newIds;
+                    }
+                })
+                .catch(err => console.error('Error fetching messages:', err));
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        setInterval(fetchMessages, 3000);
+        window.addEventListener('load', fetchMessages);
+
+        const imageInput = document.getElementById('image-input');
+        const messageInputDiv = document.querySelector('form .flex-1.relative');
+        let previewImg = null;
+        if (imageInput) {
+            imageInput.addEventListener('change', function (e) {
+                if (previewImg) previewImg.remove();
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function (ev) {
+                        previewImg = document.createElement('img');
+                        previewImg.src = ev.target.result;
+                        previewImg.className = 'mt-2 rounded-lg max-h-32 border border-green-400 shadow';
+                        previewImg.style.maxWidth = '150px';
+                        messageInputDiv.appendChild(previewImg);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

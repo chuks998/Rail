@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/main.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/error.css">
-    <title>error! withdrawal failed</title>
-</head>
-<body>
-    <section>
-        <div class="container">
-            <strong class="icon-check_circle"></strong>
-            <h1>your withdrawal request has been sent.</h1>
-            <h2 style="color: #ffc107;">fund may take upto 24 hours to reach destination account.</h2>
+    <title>Withdrawal Success</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
 
-            <a href="{% url 'dashboard' %}">back to dashboard</a>
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-green-50 via-blue-50 to-white min-h-screen flex items-center justify-center py-8">
+    <div class="w-full max-w-md mx-auto px-4">
+        <div class="glass p-8 md:p-10 text-center">
+            <div class="flex justify-center mb-4">
+                <div class="bg-gradient-to-r from-green-500 to-green-500 p-4 rounded-full shadow-lg">
+                    <i class="fas fa-check-circle text-white text-4xl"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Withdrawal Request Sent</h2>
+            <p class="text-green-600 font-semibold mb-4 text-lg">Your withdrawal request has been sent.</p>
+            <p class="text-gray-600 mb-6">Funds may take up to 24 hours to reach the destination account.</p>
+            <a href="{% url 'dashboard' %}"
+                class="w-full bg-gradient-to-r from-green-500 to-green-500 hover:from-green-600 hover:to-green-600 text-white font-bold py-2.5 rounded-lg shadow-lg transition-all text-lg flex items-center justify-center gap-2">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
         </div>
-    </section>
+        <div class="text-center mt-6 text-gray-400 text-xs">
+            &copy; {{ now|date:'Y' }} RAIL SwissBank. All rights reserved.
+        </div>
+    </div>
 </body>
+
 </html>
