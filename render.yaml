@@ -10,7 +10,7 @@ services:
     runtime: python
     plan: free
     buildCommand: "bash build.sh"
-    startCommand: "gunicorn RAILmicrofinace.wsgi:application --bind 0.0.0.0:$PORT"
+    startCommand: "gunicorn RAILmicrofinace.wsgi:application --bind 0.0.0.0:$PORT --log-level debug"
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
@@ -21,6 +21,8 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
-        value: False
+        value: "False"
       - key: ALLOWED_HOSTS
-        sync: false
+        value: railswissbank.onrender.com
+      - key: DJANGO_SETTINGS_MODULE
+        value: RAILmicrofinace.settings
