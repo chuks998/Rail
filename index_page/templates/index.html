@@ -22,9 +22,10 @@
 
     <!-- HEADER -->
     <nav class="flex items-center justify-between px-6 py-4 bg-green-700 shadow-lg sticky top-0 z-50"
-        data-aos="fade-down">
+        data-aos="fade-down" data-aos-duration="800">
+        <!-- ...existing code... -->
         <div class="flex items-center gap-2">
-            <span class="text-xl font-bold text-white">RAIL MicroFinance</span>
+            <span class="text-xl font-bold text-white">RAIL Swiss Bank</span>
         </div>
         <!-- Desktop Nav -->
         <div class="hidden md:flex space-x-3">
@@ -46,6 +47,7 @@
     <!-- Sidebar Nav (Right, Circular Wobbly Reveal) -->
     <aside id="sidebarNav"
         class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-[100] pointer-events-none md:hidden flex flex-col justify-start items-stretch translate-x-full opacity-0 transition-all duration-300">
+        <!-- ...existing code... -->
         <div class="flex items-center justify-between px-6 py-4 border-b">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-coins text-green-700 text-2xl"></i>
@@ -66,8 +68,7 @@
     </aside>
 
     <!-- HERO -->
-    <section class="relative flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto px-6 py-16 gap-10"
-        data-aos="fade-up">
+    <section class="relative flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto px-6 py-16 gap-10">
         <!-- Decorative SVG white stroke lines -->
         <svg class="absolute left-0 top-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1200 400" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +79,7 @@
             <path d="M80 320 Q600 350 1120 320" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
                 stroke-linejoin="round" opacity="0.25" />
         </svg>
-        <div class="flex-1 text-center md:text-left z-10 relative" data-aos="fade-right">
+        <div class="flex-1 text-center md:text-left z-10 relative" data-aos="fade-right" data-aos-duration="1000">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
                 Modern Banking for <span class="text-green-200">Everyone</span>
             </h1>
@@ -95,28 +96,28 @@
                 </a>
             </div>
         </div>
-        <div class="flex-1 flex justify-center z-10 relative" data-aos="fade-left">
+        <div class="flex-1 flex justify-center z-10 relative" data-aos="fade-left" data-aos-duration="1000">
             <img src="{% static 'images/homebg.jpg' %}" alt="Banking Illustration"
                 class="w-64 h-64 md:w-96 md:h-96 object-cover object-center drop-shadow-xl rounded-full border-8 border-white shadow-lg transition-all duration-300">
         </div>
     </section>
 
     <!-- STATS -->
-    <section class="bg-white py-12 shadow-inner" data-aos="fade-up">
+    <section class="bg-white py-12 shadow-inner">
         <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div data-aos="fade-right">
+            <div data-aos="zoom-in" data-aos-duration="800" data-aos-delay="0">
                 <h3 class="text-3xl font-bold text-green-700">50K+</h3>
                 <p class="text-sm text-green-800">Happy Customers</p>
             </div>
-            <div data-aos="fade-left">
+            <div data-aos="zoom-in" data-aos-duration="800" data-aos-delay="100">
                 <h3 class="text-3xl font-bold text-green-700">$2B+</h3>
                 <p class="text-sm text-green-800">Transactions Processed</p>
             </div>
-            <div data-aos="fade-right">
+            <div data-aos="zoom-in" data-aos-duration="800" data-aos-delay="200">
                 <h3 class="text-3xl font-bold text-green-700">15+</h3>
                 <p class="text-sm text-green-800">Countries Served</p>
             </div>
-            <div data-aos="fade-left">
+            <div data-aos="zoom-in" data-aos-duration="800" data-aos-delay="300">
                 <h3 class="text-3xl font-bold text-green-700">24/7</h3>
                 <p class="text-sm text-green-800">Support Availability</p>
             </div>
@@ -124,21 +125,21 @@
     </section>
 
     <!-- FEATURES -->
-    <section class="py-16 px-6 bg-green-50" data-aos="fade-up">
+    <section class="py-16 px-6 bg-green-50">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-green-700 mb-8">Why Choose RAIL MicroFinance?</h2>
+            <h2 class="text-3xl font-bold text-green-700 mb-8" data-aos="fade-up" data-aos-duration="800">Why Choose RAIL MicroFinance?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="fade-right">
+                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="flip-left" data-aos-duration="900">
                     <i class="fa-solid fa-shield-halved text-3xl text-green-600 mb-4"></i>
                     <h4 class="font-bold text-green-700 mb-2">Secure Banking</h4>
                     <p class="text-green-800">Industry-leading encryption to protect your funds and data.</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="fade-up">
+                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="flip-up" data-aos-duration="900" data-aos-delay="100">
                     <i class="fa-solid fa-bolt text-3xl text-green-600 mb-4"></i>
                     <h4 class="font-bold text-green-700 mb-2">Fast Transactions</h4>
                     <p class="text-green-800">Instant money transfers anytime, anywhere.</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="fade-left">
+                <div class="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition" data-aos="flip-right" data-aos-duration="900" data-aos-delay="200">
                     <i class="fa-solid fa-globe text-3xl text-green-600 mb-4"></i>
                     <h4 class="font-bold text-green-700 mb-2">Global Access</h4>
                     <p class="text-green-800">Manage your finances from any device worldwide.</p>
@@ -148,11 +149,11 @@
     </section>
 
     <!-- TESTIMONIALS -->
-    <section class="py-16 px-6 bg-white" data-aos="fade-up">
+    <section class="py-16 px-6 bg-white">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-green-700 mb-10">What Our Clients Say</h2>
+            <h2 class="text-3xl font-bold text-green-700 mb-10" data-aos="fade-down" data-aos-duration="800">What Our Clients Say</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-right">
+                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-right" data-aos-duration="900">
                     <p class="text-green-800 italic">"RAIL MicroFinance has completely transformed how I send and
                         receive money. Super reliable!"</p>
                     <div class="mt-4 flex items-center justify-center gap-3">
@@ -160,15 +161,15 @@
                         <span class="font-semibold text-green-700">Richard L.</span>
                     </div>
                 </div>
-                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-up">
-                    <p class="text-green-800 italic">"The best customer support I’ve experienced. They really care about
+                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+                    <p class="text-green-800 italic">"The best customer support I've experienced. They really care about
                         their customers."</p>
                     <div class="mt-4 flex items-center justify-center gap-3">
                         <img src="{% static 'images/profile.jpg' %}" class="w-10 h-10 rounded-full">
                         <span class="font-semibold text-green-700">John M.</span>
                     </div>
                 </div>
-                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-left">
+                <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-md transition" data-aos="fade-left" data-aos-duration="900" data-aos-delay="200">
                     <p class="text-green-800 italic">"Fast transfers and no hidden fees — exactly what I needed."</p>
                     <div class="mt-4 flex items-center justify-center gap-3">
                         <img src="{% static 'images/profile.jpg' %}" class="w-10 h-10 rounded-full">
@@ -180,7 +181,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="py-16 bg-green-700 text-white text-center" data-aos="fade-up">
+    <section class="py-16 bg-green-700 text-white text-center" data-aos="zoom-in" data-aos-duration="1000">
         <h2 class="text-3xl font-bold mb-4">Ready to Experience Modern Banking?</h2>
         <p class="mb-8">Join thousands of customers who trust RAIL MicroFinance every day.</p>
         <a href="{% url 'register' %}"
@@ -190,7 +191,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-green-800 text-green-100 text-sm py-6 text-center" data-aos="fade-up">
+    <footer class="bg-green-800 text-green-100 text-sm py-6 text-center" data-aos="fade-up" data-aos-duration="800">
         &copy; {{ now|date:'Y' }} RAIL MicroFinance Bank. All rights reserved.
     </footer>
 
@@ -231,9 +232,10 @@
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
         AOS.init({
-            duration: 700,
-            once: true,
-            mirror: true
+            duration: 800,
+            once: false,
+            mirror: true,
+            easing: 'ease-out-cubic'
         });
         // Sidebar logic for right, circular wobbly reveal
         const sidebarToggle = document.getElementById('sidebarToggle');
