@@ -43,3 +43,9 @@ def register(request):
         # If not valid, errors will be shown in template
     context = {"form": form, "integrity_error": integrity_error}
     return render(request, "register.html", context)
+
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, "You have been logged out successfully.")
+    return redirect("login")

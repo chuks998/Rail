@@ -21,6 +21,11 @@ def dashboard(request):
     deposit = Transfer.objects.filter(reciver_username=user)
     withdraw = Withdraw.objects.filter(sender=user)
 
+    # Latest 3 transactions for notifications
+    latest_deposit = Transfer.objects.filter(reciver_username=user).order_by("-id")[:3]
+    latest_withdraw = Withdraw.objects.filter(sender=user).order_by("-id")[:3]
+    latest_history = Transfer.objects.filter(sending_user=user).order_by("-id")[:3]
+
     # Unread chat messages
     from chat.models import ChatMessage
 
@@ -38,6 +43,9 @@ def dashboard(request):
             "history": history,
             "deposit": deposit,
             "withdraw": withdraw,
+            "latest_deposit": latest_deposit,
+            "latest_withdraw": latest_withdraw,
+            "latest_history": latest_history,
             "unread_chat_count": unread_count,
         },
     )
