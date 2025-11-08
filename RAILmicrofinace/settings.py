@@ -23,12 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default="django-insecure-9w0m-z7b_i+j9#(p9ox_k$)5+1rp3mef1z0on5jc@_myp)uvlh")
+SECRET_KEY = config(
+    "SECRET_KEY",
+    default="django-insecure-9w0m-z7b_i+j9#(p9ox_k$)5+1rp3mef1z0on5jc@_myp)uvlh",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
 
 
 # Application definition
@@ -85,8 +88,7 @@ WSGI_APPLICATION = "RAILmicrofinace.wsgi.application"
 # Use DATABASE_URL from environment if available (production), otherwise use SQLite (development)
 DATABASES = {
     "default": dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}', conn_max_age=600
     )
 }
 
@@ -126,7 +128,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")] if os.path.exists(os.path.join(BASE_DIR, "static")) else []
+STATICFILES_DIRS = (
+    [os.path.join(BASE_DIR, "static")]
+    if os.path.exists(os.path.join(BASE_DIR, "static"))
+    else []
+)
 
 # WhiteNoise configuration for static files
 STORAGES = {
@@ -154,7 +160,7 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    X_FRAME_OPTIONS = 'DENY'
+    X_FRAME_OPTIONS = "DENY"
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
