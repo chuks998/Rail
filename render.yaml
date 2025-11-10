@@ -9,7 +9,7 @@ services:
     name: rail-banking-app
     runtime: python
     plan: free
-    buildCommand: "bash build.sh"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --no-input"
     startCommand: "gunicorn RAILmicrofinace.wsgi:application --bind 0.0.0.0:$PORT --log-level debug"
     envVars:
       - key: PYTHON_VERSION

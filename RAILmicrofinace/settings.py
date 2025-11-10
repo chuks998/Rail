@@ -131,8 +131,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Static files will be collected from each app's static/ directory
 STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
 # WhiteNoise configuration for static files
