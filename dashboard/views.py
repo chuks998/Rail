@@ -2,6 +2,7 @@ from ast import Not, With
 from django.dispatch import receiver
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import AccountDetail, Deposit, Transfer, Withdraw
 from django.db.models import F
 from django.contrib.auth.hashers import check_password
@@ -9,11 +10,13 @@ from django.contrib.auth.hashers import check_password
 # Create your views here.
 
 
+@login_required(login_url='login')
 def dashboard_views(request):
     template = "dashboard.html"
     return render(request, template)
 
 
+@login_required(login_url='login')
 def dashboard(request):
     user = request.user
     accounts = AccountDetail.objects.filter(account_holder=user)
@@ -51,11 +54,13 @@ def dashboard(request):
     )
 
 
+@login_required(login_url='login')
 def send_procced(request):
     template = "send_msg.html"
     return render(request, template)
 
 
+@login_required(login_url='login')
 def transfer(request):
 
     if request.method == "POST":
@@ -121,10 +126,12 @@ def transfer(request):
     return render(request, "send_form.html")
 
 
+@login_required(login_url='login')
 def withdraw_msg(request):
     return render(request, "withdrawal_msg.html")
 
 
+@login_required(login_url='login')
 def withdraw(request):
     if request.method == "POST":
         account_owner = AccountDetail.objects.get(account_holder=request.user)
@@ -154,6 +161,7 @@ def withdraw(request):
     return render(request, "withdraw.html")
 
 
+@login_required(login_url='login')
 def deposit(request):
     if request.method == "POST":
         depositor = request.user
